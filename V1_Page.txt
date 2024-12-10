@@ -1,0 +1,63 @@
+# Title of the page
+st.title('Movie Review System')
+
+# List of movie genres for dropdown
+movie_types = ['Action', 'Comedy', 'Romance', 'Thriller', 'Drama', 'Horror', 'Sci-Fi', 'Fantasy']
+
+# Set default value
+default_movie_type = 'Select the type of movie'
+
+# Date selection
+# date_selection = st.selectbox(
+#     "When did you watch the last movie?",
+#     ('Select a date', '7 days ago', '1 month ago', 'More than a month ago')
+# )
+
+date_selection = st.selectbox(
+    "When did you watch the last movie?",
+    ('Select a date', 'Less than a week ago', 'More than a week ago', 'A month ago', 'More than a month ago')
+)
+
+# if date_selection == 'Select a date':
+#     watch_date = st.date_input("Select the exact date you watched the movie:",value=None)
+# else:
+#     watch_date = date_selection
+
+# if not date_selection:
+#    date_selection_error = "Please Select a date."
+
+# Movie name and type input
+movie_name = st.text_input("Enter the movie name:", "")
+# Highlight if movie name is missing
+# if not movie_name:
+#     movie_name_error = "Please enter the movie name."
+
+movie_type = st.selectbox("Select the type of movie:", movie_types, index=None)
+
+# Movie review comment box
+review = st.text_area("Enter your movie review here:")
+
+# Highlight if review is missing
+# if not review:
+#     review_error = "Please enter your movie review."
+
+if st.button('Submit Review'):
+    if movie_name and review:
+
+        preprocessed_input=preprocess_text(review)
+
+        # Make prediction
+        prediction=model.predict(preprocessed_input)
+        sentiment='Positive' if prediction[0][0] > 0.5 else 'Negative'
+
+        # Display the result
+        st.write(f'Sentiment: {sentiment}')
+        st.write(f'Prediction Score: {prediction[0][0]}')
+    else:
+         # Display error messages for missing fields
+        if not movie_name:
+            st.error("Please enter the movie name.")
+        if not review:
+            st.error("Please enter your movie review.")
+        if not date_selection:
+            st.error("Please Select a date.")
