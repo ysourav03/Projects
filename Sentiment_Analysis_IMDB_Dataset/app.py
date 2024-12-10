@@ -10,7 +10,23 @@ word_index = imdb.get_word_index()
 reverse_word_index = {value: key for key, value in word_index.items()}
 
 ## Load the pre-trained model with ReLU activation
-model = load_model('imdb_rnn_model.h5')
+# model = load_model('imdb_rnn_model.h5')
+
+# import os
+
+# if os.path.exists("imdb_rnn_model.h5"):
+#     print("File found: imdb_rnn_model.h5")
+# else:
+#     print("File NOT found: imdb_rnn_model.h5")
+
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, "imdb_rnn_model.h5")
+
+print(f"Attempting to load model from: {model_path}")
+model = load_model(model_path)
+print("Model loaded successfully.")
 
 # Function to preprocess user input
 def preprocess_text(text):
@@ -20,7 +36,7 @@ def preprocess_text(text):
     return padded_review
 
 
-## WEB PAGE CODE
+## WEB PAGE CODE ##
 import streamlit as st
 from datetime import date
 
