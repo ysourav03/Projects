@@ -25,8 +25,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_dir, "imdb_rnn_model.h5")
 
 print(f"Attempting to load model from: {model_path}")
-# model = load_model(model_path,custom_objects={'time_major': False})
-model = load_model(model_path)
+model = load_model(model_path,custom_objects={'time_major': False})
+# model = load_model(model_path)
 print("Model loaded successfully.")
 
 # Function to preprocess user input
