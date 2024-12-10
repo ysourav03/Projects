@@ -25,7 +25,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_dir, "imdb_rnn_model.h5")
 
 print(f"Attempting to load model from: {model_path}")
-model = load_model(model_path)
+model = load_model(model_path,custom_objects={'time_major': False})
 print("Model loaded successfully.")
 
 # Function to preprocess user input
@@ -34,6 +34,13 @@ def preprocess_text(text):
     encoded_review = [word_index.get(word, 2) + 3 for word in words]
     padded_review = sequence.pad_sequences([encoded_review], maxlen=500)
     return padded_review
+
+# # Function to preprocess user input
+# def preprocess_text(text):
+#     words = text.lower().split()
+#     encoded_review = [word_index.get(word, 2) + 3 for word in words]  # 2 for unknown word and 3 for padding offset
+#     padded_review = sequence.pad_sequences([encoded_review], maxlen=500)  # Adjust maxlen according to your model's input requirement
+#     return padded_review
 
 
 ## WEB PAGE CODE ##
